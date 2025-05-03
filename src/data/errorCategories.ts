@@ -16,24 +16,24 @@ export interface ErrorCategory {
   errors: ErrorItem[];
 }
 
-import { 
-  Database, 
-  FileWarning,
-  Link2Off,
-  Clock,
-  BarChart2,
-  UserX,
-  HelpCircle,
-  FileText,
-  Settings2
-} from "lucide-react";
 import React from "react";
+import {
+  DataProcessingIcon,
+  ReconciliationIcon,
+  IntegrationIcon,
+  PerformanceIcon,
+  ReportingIcon,
+  AuthenticationIcon,
+  UsabilityIcon,
+  DocumentationIcon,
+  CustomizationIcon
+} from "../utils/iconComponents";
 
 export const errorCategories: ErrorCategory[] = [
   {
     id: "data-processing",
     name: "Carga y Procesamiento de Datos",
-    icon: <Database className="h-5 w-5" />,
+    icon: <DataProcessingIcon />,
     description: "Dificultades al importar información desde diferentes fuentes, fallos en la transformación o el modelado de los datos.",
     errors: [
       {
@@ -57,7 +57,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "reconciliation",
     name: "Reconciliaciones",
-    icon: <FileWarning className="h-5 w-5" />,
+    icon: <ReconciliationIcon />,
     description: "Errores en la ejecución de las reglas de reconciliación, resultados inesperados o incorrectos, dificultades para identificar o resolver diferencias.",
     errors: [
       {
@@ -73,7 +73,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "integration",
     name: "Integraciones",
-    icon: <Link2Off className="h-5 w-5" />,
+    icon: <IntegrationIcon />,
     description: "Problemas al conectar Simetrik con otros sistemas (ERP, bancos, etc.), errores en la sincronización de la información.",
     errors: [
       {
@@ -97,7 +97,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "performance",
     name: "Rendimiento",
-    icon: <Clock className="h-5 w-5" />,
+    icon: <PerformanceIcon />,
     description: "La plataforma puede volverse lenta al procesar grandes volúmenes de datos o experimentar caídas de conexión.",
     errors: [
       {
@@ -113,7 +113,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "reporting",
     name: "Reportes y Dashboards",
-    icon: <BarChart2 className="h-5 w-5" />,
+    icon: <ReportingIcon />,
     description: "Información incorrecta, fallos en la visualización o personalización de los reportes.",
     errors: [
       {
@@ -129,7 +129,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "authentication",
     name: "Acceso y Autenticación",
-    icon: <UserX className="h-5 w-5" />,
+    icon: <AuthenticationIcon />,
     description: "Dificultades para iniciar sesión, problemas con los permisos de usuario.",
     errors: [
       {
@@ -145,7 +145,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "usability",
     name: "Usabilidad",
-    icon: <HelpCircle className="h-5 w-5" />,
+    icon: <UsabilityIcon />,
     description: "Dificultad para navegar por la plataforma o encontrar las funcionalidades deseadas.",
     errors: [
       {
@@ -161,7 +161,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "documentation",
     name: "Documentación",
-    icon: <FileText className="h-5 w-5" />,
+    icon: <DocumentationIcon />,
     description: "Falta de guías o tutoriales que expliquen cómo utilizar las diferentes funciones.",
     errors: [
       {
@@ -177,7 +177,7 @@ export const errorCategories: ErrorCategory[] = [
   {
     id: "customization",
     name: "Personalización",
-    icon: <Settings2 className="h-5 w-5" />,
+    icon: <CustomizationIcon />,
     description: "Limitaciones para adaptar la plataforma a las necesidades específicas de cada usuario o empresa.",
     errors: [
       {

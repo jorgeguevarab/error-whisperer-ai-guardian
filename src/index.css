@@ -43,6 +43,12 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 240 80% 55%;
     --sidebar-ring: 0 0% 100%;
+    
+    /* Error severity colors */
+    --error-critical: 0 84% 60%;
+    --error-high: 15 90% 50%;
+    --error-medium: 30 90% 50%;
+    --error-low: 260 80% 65%;
   }
 }
 

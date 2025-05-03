@@ -58,11 +58,17 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <div className="py-4 px-2">
-          <h1 className="text-xl font-bold text-center text-primary flex items-center justify-center">
-            <AlertTriangle className="w-6 h-6 mr-2" />
-            Error Whisperer
-          </h1>
+        <div className="py-6 px-2">
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex">
+              <div className="h-4 w-4 bg-white rounded-sm mr-1"></div>
+              <div className="h-4 w-4 bg-white rounded-sm"></div>
+            </div>
+            <h1 className="text-xl font-bold text-center text-white">
+              Simetrik
+            </h1>
+          </div>
+          <p className="text-xs text-white/70 text-center mt-2">Error Whisperer</p>
         </div>
         
         <SidebarGroup>
@@ -73,7 +79,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton 
                     asChild 
-                    active={activeItem === item.id}
+                    isActive={activeItem === item.id}
                     onClick={() => setActiveItem(item.id)}
                   >
                     <Link to={item.url}>

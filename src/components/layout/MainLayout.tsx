@@ -16,7 +16,7 @@ export function MainLayout({ children }: MainLayoutProps) {
           <div className="flex items-center justify-between mb-6">
             <SidebarTrigger />
             <div className="text-sm text-muted-foreground">
-              Error Whisperer AI • {new Date().toLocaleDateString()}
+              Simetrik Error Whisperer • {new Date().toLocaleDateString()}
             </div>
           </div>
           {children}

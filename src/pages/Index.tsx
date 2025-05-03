@@ -32,34 +32,34 @@ const Dashboard = () => {
       message: "Conexión a base de datos fallida",
       timestamp: "Hace 10 minutos",
       component: "Database Service",
-      severity: "critical",
-      status: "investigating",
+      severity: "critical" as const,
+      status: "investigating" as const,
     },
     {
       id: "err-002",
       message: "Timeout en API externa",
       timestamp: "Hace 25 minutos",
       component: "API Gateway",
-      severity: "high",
-      status: "new",
+      severity: "high" as const,
+      status: "new" as const,
     },
     {
       id: "err-003",
       message: "Memoria insuficiente en el servidor",
       timestamp: "Hace 42 minutos",
       component: "Application Server",
-      severity: "medium",
-      status: "new",
+      severity: "medium" as const,
+      status: "new" as const,
     },
     {
       id: "err-004",
       message: "Error de validación en formulario",
       timestamp: "Hace 1 hora",
       component: "Frontend",
-      severity: "low",
-      status: "resolved",
+      severity: "low" as const,
+      status: "resolved" as const,
     },
-  ] as const;
+  ];
 
   const aiAnalysis = {
     title: "Posible problema de configuración de base de datos",

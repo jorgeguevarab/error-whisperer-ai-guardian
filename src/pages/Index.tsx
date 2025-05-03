@@ -6,14 +6,15 @@ import { ErrorTrendChart } from "@/components/dashboard/ErrorTrendChart";
 import { RecentErrorsList } from "@/components/dashboard/RecentErrorsList";
 import { AIAnalysisCard } from "@/components/dashboard/AIAnalysisCard";
 import { AlertTriangle, BellOff, Bug, Search } from "lucide-react";
+import { errorCategories } from "@/data/errorCategories";
 
 const Dashboard = () => {
   // Sample data
   const errorSeverityData = [
-    { name: "Crítico", value: 13, color: "#991B1B" },
-    { name: "Alto", value: 27, color: "#EF4444" },
-    { name: "Medio", value: 42, color: "#F97316" },
-    { name: "Bajo", value: 63, color: "#8B5CF6" },
+    { name: "Crítico", value: 13, color: "hsl(var(--error-critical))" },
+    { name: "Alto", value: 27, color: "hsl(var(--error-high))" },
+    { name: "Medio", value: 42, color: "hsl(var(--error-medium))" },
+    { name: "Bajo", value: 63, color: "hsl(var(--error-low))" },
   ];
 
   const errorTrendData = [
@@ -26,40 +27,21 @@ const Dashboard = () => {
     { date: "Dom", errors: 8, anomalies: 1 },
   ];
 
-  const recentErrors = [
-    {
-      id: "err-001",
-      message: "Conexión a base de datos fallida",
-      timestamp: "Hace 10 minutos",
-      component: "Database Service",
-      severity: "critical" as const,
-      status: "investigating" as const,
-    },
-    {
-      id: "err-002",
-      message: "Timeout en API externa",
-      timestamp: "Hace 25 minutos",
-      component: "API Gateway",
-      severity: "high" as const,
-      status: "new" as const,
-    },
-    {
-      id: "err-003",
-      message: "Memoria insuficiente en el servidor",
-      timestamp: "Hace 42 minutos",
-      component: "Application Server",
-      severity: "medium" as const,
-      status: "new" as const,
-    },
-    {
-      id: "err-004",
-      message: "Error de validación en formulario",
-      timestamp: "Hace 1 hora",
-      component: "Frontend",
-      severity: "low" as const,
-      status: "resolved" as const,
-    },
-  ];
+  // Get all errors from all categories
+  const allErrors = errorCategories.flatMap(category => category.errors);
+  
+  // Filter most recent errors for the dashboard (limit to 4)
+  const recentErrors = allErrors
+    .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    .slice(0, 4)
+    .map(error => ({
+      id: error.id,
+      message: error.message,
+      timestamp: formatTimestamp(error.timestamp),
+      component: getCategoryNameForError(error.id),
+      severity: error.severity,
+      status: error.status,
+    }));
 
   const aiAnalysis = {
     title: "Posible problema de configuración de base de datos",
@@ -69,6 +51,29 @@ const Dashboard = () => {
     severity: "high" as const,
   };
 
+  // Helper function to format timestamp as "Hace X minutos/horas"
+  function formatTimestamp(timestamp: string): string {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.round(diffMs / 60000);
+    
+    if (diffMins < 60) {
+      return `Hace ${diffMins} minutos`;
+    } else {
+      const diffHours = Math.round(diffMins / 60);
+      return `Hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
+    }
+  }
+
+  // Helper function to get category name for an error
+  function getCategoryNameForError(errorId: string): string {
+    const category = errorCategories.find(cat => 
+      cat.errors.some(err => err.id === errorId)
+    );
+    return category ? category.name : "Sin categoría";
+  }
+
   return (
     <MainLayout>
       <h1 className="text-3xl font-bold mb-6">Panel de Control</h1>
@@ -76,14 +81,14 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard 
           title="Total de Errores"
-          value="145"
-          description="Últimas 24 horas"
+          value={allErrors.length.toString()}
+          description="Errores monitorizados"
           icon={<AlertTriangle />}
           trend={{ value: 12, isPositive: false }}
         />
         <StatCard 
           title="Errores Críticos"
-          value="13"
+          value={allErrors.filter(err => err.severity === "critical").length.toString()}
           description="Requieren atención inmediata"
           icon={<Bug />}
           trend={{ value: 5, isPositive: false }}
@@ -97,8 +102,8 @@ const Dashboard = () => {
         />
         <StatCard 
           title="Alertas Activas"
-          value="7"
-          description="Sin resolver"
+          value={allErrors.filter(err => err.status === "investigating").length.toString()}
+          description="En investigación"
           icon={<BellOff />}
           trend={{ value: 2, isPositive: true }}
         />
